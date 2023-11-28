@@ -56,7 +56,7 @@ class AdminController extends Controller
           'alert-type'  => 'success'
         );
 
-        return redirect()->back($alert);
+        return redirect()->back()->with($alert);
 
     }
 

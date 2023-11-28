@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +18,15 @@ use App\Http\Controllers\StudentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+//
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -44,8 +48,6 @@ Route::middleware('auth','role:admin')->group(function (){
 
 });
 
-
-
 //End Admin
 
 //Lecturer
@@ -58,3 +60,10 @@ Route::middleware('auth','role:lecturer')->group(function (){
 Route::get('/admin/login', [AdminController::class, 'adminLogin'])->name('admin.login');
 
 // Student Controller
+
+// Permission And Controller
+Route::controller(RoleController::class)->group(function()){
+
+    Route::get('/all/permission','index')->name('allPermission');
+}
+
